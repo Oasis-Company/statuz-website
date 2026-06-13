@@ -1,6 +1,0 @@
-{
-  "name": "Statuz Design System",
-  "description": "The official high-fidelity interactive design system, interactive playground, and prototype for the Statuz protocol.",
-  "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
-}
