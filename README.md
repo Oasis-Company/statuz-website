@@ -1,0 +1,2 @@
+# statuz website
+Statuz!
