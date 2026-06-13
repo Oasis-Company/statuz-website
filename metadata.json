@@ -1,0 +1,7 @@
+{
+  "name": "statuz-website",
+  "version": "0.5.0",
+  "maintainer": "ceaserzhao",
+  "framework": "vite-react-ts",
+  "frameworkVersion": "6.2.3"
+}
