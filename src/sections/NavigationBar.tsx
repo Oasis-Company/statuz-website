@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { siteMeta } from '../data';
 
 interface Props {
   onOpenInspector: () => void;
@@ -43,7 +44,7 @@ export default function NavigationBar({ onOpenInspector }: Props) {
             <Logo size={28} />
             <div className="flex items-baseline gap-2">
               <span className="font-display text-lg tracking-tight">statuz</span>
-              <span className="label hidden sm:inline">v 0.5.0</span>
+              <span className="label hidden sm:inline">v {siteMeta.version}</span>
             </div>
           </a>
 
@@ -60,11 +61,18 @@ export default function NavigationBar({ onOpenInspector }: Props) {
               onClick={onOpenInspector}
               className="hidden md:inline-flex items-center gap-2 text-[0.72rem] mono text-ink-60 hover:text-ink border hairline rounded-sm px-3 py-2 transition-colors"
             >
-              <span className="inline-block w-1.5 h-1.5 rounded-full bg-ink" />
-              inspect tokens
+              <span className="inline-block w-1.5 h-1.5 rounded-full bg-ink" /> inspect tokens
             </button>
             <a
-              href="https://github.com/statuz-protocol/statuz"
+              href={siteMeta.npmUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="hidden md:inline-flex items-center text-[0.72rem] mono text-ink border hairline hover:border-ink rounded-sm px-3 py-2 transition-colors"
+            >
+              npm ↗
+            </a>
+            <a
+              href={siteMeta.repoUrl}
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center text-[0.72rem] mono text-white bg-ink hover:bg-ink-80 rounded-sm px-3 py-2 transition-colors"

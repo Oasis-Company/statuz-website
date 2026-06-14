@@ -7,22 +7,14 @@ export interface ThemeConfig {
   density: 'compact' | 'comfortable' | 'spacious';
 }
 
-export interface QuizAnswer {
-  id: string;
-  label: string;
+export function isThemeKey(s: string): s is ThemeKey {
+  return s === 'linear' || s === 'compact' || s === 'mono';
 }
 
-export interface StatuzRow {
-  field: string;
-  value: string;
-  source?: 'system' | 'agent' | 'human';
-}
-
-export interface Layer {
-  id: string;
-  name: string;
-  summary: string;
-  responsibility: string;
-  cadence: string;
-  failureMode: string;
+export function themeKeyLabel(k: ThemeKey): string {
+  return k === 'linear'
+    ? 'Linear Continuity'
+    : k === 'compact'
+      ? 'Compact Signal'
+      : 'Mono Protocol';
 }

@@ -71,6 +71,9 @@ export default function YamlSandbox() {
             </span>
           </div>
           <div className="flex-1 overflow-y-auto px-6 py-5 mono text-[0.78rem] text-ink-80">
+            <div className="mb-3 text-[0.7rem] text-ink-40 italic border-b hairline pb-2">
+              lightweight preview — top-level scalar rows only. A real Statuz validator runs the JSON schema.
+            </div>
             {observations.length === 0 && (
               <div className="text-ink-40 italic">No top-level observables yet.</div>
             )}

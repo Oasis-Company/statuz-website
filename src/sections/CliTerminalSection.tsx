@@ -2,24 +2,25 @@ import CommandTerminal from '../components/CommandTerminal';
 
 export default function CliTerminalSection() {
   return (
-    <section id="terminal" className="py-16 border-b border-zinc-200">
-      <div className="grid grid-cols-12 gap-4">
-        <div className="col-span-12 md:col-span-4">
-          <div className="text-[11px] font-mono uppercase tracking-[0.25em] text-zinc-500">
-            Command Terminal
+    <section id="terminal" className="border-b hairline">
+      <div className="mx-auto px-4 py-24" style={{ maxWidth: 1200 }}>
+        <div className="grid grid-cols-12 gap-8">
+          <div className="col-span-12 lg:col-span-4">
+            <div className="label">Command Terminal</div>
+            <h2 className="mt-4 font-display font-medium text-[2rem] sm:text-[2.3rem] leading-tight text-ink">
+              Command Statuz from a terminal.
+            </h2>
+            <p className="mt-4 text-ink-60 text-base leading-relaxed">
+              The three real CLI commands are exposed here:
+              <code className="font-mono text-ink bg-ink-05 px-1.5 mx-1">statuz init</code>,
+              <code className="font-mono text-ink bg-ink-05 px-1.5 mx-1">statuz validate</code>, and
+              <code className="font-mono text-ink bg-ink-05 px-1.5 ml-1">statuz resume</code>.
+              The terminal runs inside the page and keeps its own scrollable history.
+            </p>
           </div>
-          <h2 className="font-display text-3xl text-zinc-950 mt-4 leading-tight">
-            Command Statuz from a terminal.
-          </h2>
-          <p className="mt-4 text-zinc-600 text-sm max-w-prose">
-            Try <code className="font-mono text-zinc-900 bg-zinc-100 px-1">status</code>,
-            <code className="font-mono text-zinc-900 bg-zinc-100 px-1 mx-1">drift</code>, or
-            <code className="font-mono text-zinc-900 bg-zinc-100 px-1">contract</code>. The terminal
-            runs inside the page and keeps its own scrollable history.
-          </p>
-        </div>
-        <div className="col-span-12 md:col-span-8">
-          <CommandTerminal />
+          <div className="col-span-12 lg:col-span-8">
+            <CommandTerminal />
+          </div>
         </div>
       </div>
     </section>

@@ -29,44 +29,33 @@ export default function TokenInspector({ onClose }: Props) {
           <section>
             <div className="label">protocol</div>
             <div className="mt-3 border hairline rounded-sm p-4 bg-ink-05 mono text-[0.82rem] text-ink-80 leading-7">
-              <div>
-                <span className="text-ink-40">protocol</span> &nbsp;statuz/v1
-              </div>
-              <div>
-                <span className="text-ink-40">site</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;{siteMeta.name}
-              </div>
-              <div>
-                <span className="text-ink-40">version</span> &nbsp;&nbsp;{siteMeta.version}
-              </div>
-              <div>
-                <span className="text-ink-40">maintainer</span>&nbsp;{siteMeta.maintainer}
-              </div>
-              <div>
-                <span className="text-ink-40">company</span> &nbsp;&nbsp;Oasis Company
-              </div>
+              <div><span className="text-ink-40">protocol</span> &nbsp; statuz/v1</div>
+              <div><span className="text-ink-40">site</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; {siteMeta.name}</div>
+              <div><span className="text-ink-40">version</span> &nbsp;&nbsp; {siteMeta.version}</div>
+              <div><span className="text-ink-40">maintainer</span> &nbsp; {siteMeta.maintainer}</div>
+              <div><span className="text-ink-40">company</span> &nbsp;&nbsp; {siteMeta.company}</div>
+              <div><span className="text-ink-40">license</span> &nbsp;&nbsp;&nbsp; {siteMeta.license}</div>
             </div>
           </section>
 
           <section>
-            <div className="label">live status</div>
+            <div className="label">repositories & links</div>
             <div className="mt-3 border hairline rounded-sm overflow-hidden">
               {[
-                ['session.id', 'sess_8F2a...e1'],
-                ['agent.id', 'agent_ceaserzhao'],
-                ['envelope', 'research/docs, web:read'],
-                ['tools.enabled', 'browser, files, planner'],
-                ['calibration.p50', '0.72 ± 0.04'],
-                ['human.contract', 'deploy-statuz-website'],
-                ['milestone', 'beta-v0.5.0'],
-                ['last.turn', '631ms ago'],
-              ].map(([k, v]) => (
+                ['source', siteMeta.repoUrl],
+                ['issues', siteMeta.issuesUrl],
+                ['npm', siteMeta.npmUrl],
+                ['docs', siteMeta.docsUrl],
+                ['homepage', siteMeta.homepage],
+              ].map(([label, url]) => (
                 <div
-                  key={k}
-                  className="grid grid-cols-[130px_1fr] gap-3 px-4 py-2 text-[0.82rem] mono border-b hairline last:border-b-0"
+                  key={label}
+                  className="grid grid-cols-[110px_1fr] gap-3 px-4 py-2 text-[0.82rem] mono border-b hairline last:border-b-0"
                 >
-                  <span className="text-ink-40">{k}</span>
-                  <span className="text-ink-80 truncate">{v}</span>
+                  <span className="text-ink-40">{label}</span>
+                  <a href={url} target="_blank" rel="noreferrer" className="text-ink-80 hover:text-ink truncate">
+                    {url} ↗
+                  </a>
                 </div>
               ))}
             </div>
@@ -75,28 +64,33 @@ export default function TokenInspector({ onClose }: Props) {
           <section>
             <div className="label">typography & tokens</div>
             <div className="mt-3 border hairline rounded-sm p-4 bg-ink-05 mono text-[0.82rem] text-ink-80 leading-7">
-              <div>
-                <span className="text-ink-40">font.sans</span>&nbsp;&nbsp;&nbsp; Inter
-              </div>
-              <div>
-                <span className="text-ink-40">font.display</span>&nbsp; Space Grotesk
-              </div>
-              <div>
-                <span className="text-ink-40">font.serif</span>&nbsp;&nbsp;&nbsp; Newsreader
-              </div>
-              <div>
-                <span className="text-ink-40">font.mono</span>&nbsp;&nbsp;&nbsp;&nbsp; JetBrains Mono
-              </div>
+              <div><span className="text-ink-40">font.sans</span>&nbsp;&nbsp;&nbsp; Inter</div>
+              <div><span className="text-ink-40">font.display</span>&nbsp; Space Grotesk</div>
+              <div><span className="text-ink-40">font.mono</span>&nbsp;&nbsp;&nbsp;&nbsp; JetBrains Mono</div>
               <div className="border-t hairline mt-3 pt-3">
                 <span className="text-ink-40">palette</span>&nbsp;&nbsp;&nbsp;&nbsp; ink · paper · hairline
               </div>
-              <div>
-                <span className="text-ink-40">radius</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; small · 2–4px
-              </div>
-              <div>
-                <span className="text-ink-40">motion</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; draw-in ·
-                slide-in-from-right
-              </div>
+              <div><span className="text-ink-40">radius</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; small · 2–4px</div>
+            </div>
+          </section>
+
+          <section>
+            <div className="label">live session</div>
+            <div className="mt-3 border hairline rounded-sm overflow-hidden">
+              {[
+                ['human.contract', 'deploy statuz-website'],
+                ['session.kind', 'protocol-demo'],
+                ['session.state', 'active'],
+                ['last.turn', 'just now'],
+              ].map(([k, v]) => (
+                <div
+                  key={k}
+                  className="grid grid-cols-[160px_1fr] gap-3 px-4 py-2 text-[0.82rem] mono border-b hairline last:border-b-0"
+                >
+                  <span className="text-ink-40">{k}</span>
+                  <span className="text-ink-80 truncate">{v}</span>
+                </div>
+              ))}
             </div>
           </section>
         </div>

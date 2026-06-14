@@ -1,29 +1,14 @@
-import { useState } from 'react';
+import { useTheme } from '../context/ThemeContext';
+import type { ThemeKey } from '../types';
 
-type ThemeKey = 'linear' | 'compact' | 'mono';
-
-interface ThemeConfig {
-  theme: ThemeKey;
-  accent: string;
-  radius: number;
-}
-
-const OPTIONS: { key: ThemeKey; label: string; tagline: string }[] = [
+const OPTIONS: Array<{ key: ThemeKey; label: string; tagline: string }> = [
   { key: 'linear', label: 'Linear Continuity', tagline: 'Editorial lines & generous whitespace' },
   { key: 'compact', label: 'Compact Signal', tagline: 'Dense tables, high information density' },
   { key: 'mono', label: 'Mono Protocol', tagline: 'Monospace, terminal-first, protocol view' },
 ];
 
 export default function DesignSystemWizard() {
-  const [config, setConfig] = useState<ThemeConfig>({
-    theme: 'linear',
-    accent: '#0a0a0a',
-    radius: 4,
-  });
-
-  const setTheme = (theme: ThemeKey) => setConfig((c) => ({ ...c, theme }));
-  const setAccent = (accent: string) => setConfig((c) => ({ ...c, accent }));
-  const setRadius = (radius: number) => setConfig((c) => ({ ...c, radius }));
+  const { config, update, cycleTheme } = useTheme();
 
   return (
     <div className="rounded-sm border hairline bg-white">
@@ -34,10 +19,15 @@ export default function DesignSystemWizard() {
             Pick your visual contract
           </div>
         </div>
-        <span className="hidden md:inline-flex items-center gap-2">
-          <span className="inline-block w-2 h-2 rounded-full bg-ink" />
-          <span className="label">live</span>
-        </span>
+        <div className="hidden md:flex items-center gap-2">
+          <span className="label">theme · {config.theme}</span>
+          <button
+            onClick={cycleTheme}
+            className="label text-ink-60 hover:text-ink border hairline rounded-sm px-3 py-1.5"
+          >
+            cycle →
+          </button>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x hairline">
@@ -46,10 +36,8 @@ export default function DesignSystemWizard() {
           return (
             <button
               key={opt.key}
-              onClick={() => setTheme(opt.key)}
-              className={`text-left px-6 py-5 transition-colors ${
-                active ? 'bg-ink text-white' : 'text-ink hover:bg-ink-05'
-              }`}
+              onClick={() => update({ theme: opt.key })}
+              className={`text-left px-6 py-5 transition-colors ${active ? 'bg-ink text-white' : 'text-ink hover:bg-ink-05'}`}
             >
               <div className="font-display text-base leading-tight">{opt.label}</div>
               <div className={`mt-2 text-sm ${active ? 'text-white/70' : 'text-ink-60'}`}>
@@ -70,13 +58,13 @@ export default function DesignSystemWizard() {
             <input
               type="color"
               value={config.accent}
-              onChange={(e) => setAccent(e.target.value)}
+              onChange={(e) => update({ accent: e.target.value })}
               className="w-10 h-10 rounded-sm border hairline bg-white"
             />
             <input
               type="text"
               value={config.accent}
-              onChange={(e) => setAccent(e.target.value)}
+              onChange={(e) => update({ accent: e.target.value })}
               className="mono text-sm text-ink-80 bg-white border hairline rounded-sm px-3 py-1.5 w-32"
             />
           </div>
@@ -90,7 +78,7 @@ export default function DesignSystemWizard() {
               min={0}
               max={12}
               value={config.radius}
-              onChange={(e) => setRadius(Number(e.target.value))}
+              onChange={(e) => update({ radius: Number(e.target.value) })}
               className="flex-1 accent-ink"
             />
             <span className="mono text-sm text-ink w-12 text-right">{config.radius}px</span>
@@ -100,15 +88,10 @@ export default function DesignSystemWizard() {
         <div className="px-6 py-5">
           <div className="label">Current Contract</div>
           <div className="mt-3 mono text-[0.8rem] text-ink-60 leading-6">
-            <div>
-              theme &nbsp;&nbsp;&nbsp; <span className="text-ink">{config.theme}</span>
-            </div>
-            <div>
-              accent &nbsp;&nbsp;<span className="text-ink">{config.accent}</span>
-            </div>
-            <div>
-              radius &nbsp;&nbsp;<span className="text-ink">{config.radius}px</span>
-            </div>
+            <div>theme &nbsp;&nbsp;&nbsp; <span className="text-ink">{config.theme}</span></div>
+            <div>accent &nbsp;&nbsp;<span className="text-ink">{config.accent}</span></div>
+            <div>radius &nbsp;&nbsp;<span className="text-ink">{config.radius}px</span></div>
+            <div>density &nbsp;&nbsp;<span className="text-ink">{config.density}</span></div>
           </div>
         </div>
       </div>

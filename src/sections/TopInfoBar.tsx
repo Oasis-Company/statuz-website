@@ -1,3 +1,5 @@
+import { siteMeta } from '../data';
+
 export default function TopInfoBar() {
   return (
     <div className="bg-ink text-white">
@@ -7,11 +9,19 @@ export default function TopInfoBar() {
       >
         <div className="flex items-center gap-2">
           <span className="inline-block w-1.5 h-1.5 rounded-full bg-white" />
-          <span>Statuz Beta v0.5.0 — Situated Alignment Runtime</span>
+          <span>Statuz v{siteMeta.version} — {siteMeta.tagline}</span>
         </div>
-        <p className="hidden md:block opacity-70">
-          maintainer: ceaserzhao · Oasis Company · Apache-2.0
-        </p>
+        <nav className="hidden md:flex items-center gap-4 text-white/70">
+          <a href={siteMeta.repoUrl} target="_blank" rel="noreferrer" className="hover:text-white">
+            github
+          </a>
+          <a href={siteMeta.issuesUrl} target="_blank" rel="noreferrer" className="hover:text-white">
+            issues
+          </a>
+          <a href={siteMeta.npmUrl} target="_blank" rel="noreferrer" className="hover:text-white">
+            npm · {siteMeta.npmPackage}
+          </a>
+        </nav>
         <span className="opacity-70 hidden sm:inline">protocol: statuz/v1</span>
       </div>
     </div>

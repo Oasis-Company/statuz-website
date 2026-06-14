@@ -1,6 +1,24 @@
-import { roadmap } from '../data';
+import { roadmap, type RoadmapEntry } from '../data';
+
+function summarizeByState(entries: RoadmapEntry[]): Array<{
+  state: RoadmapEntry['state'];
+  versions: string;
+  count: number;
+}> {
+  const order: Array<RoadmapEntry['state']> = ['stable', 'in-progress', 'draft', 'planned'];
+  return order
+    .map((s) => {
+      const group = entries.filter((e) => e.state === s);
+      if (group.length === 0) return null;
+      const versions = group.map((e) => e.version).join(' · ');
+      return { state: s, versions, count: group.length };
+    })
+    .filter((x): x is { state: RoadmapEntry['state']; versions: string; count: number } => x !== null);
+}
 
 export default function RoadmapSection() {
+  const summary = summarizeByState(roadmap);
+
   return (
     <section id="roadmap" className="border-b hairline">
       <div className="mx-auto px-4 py-24" style={{ maxWidth: 1200 }}>
@@ -15,28 +33,24 @@ export default function RoadmapSection() {
               independently useful. None requires the others to make sense today.
             </p>
             <div className="mt-10 grid grid-cols-2 gap-3">
-              <div className="border hairline rounded-sm p-4">
-                <div className="label">stable</div>
-                <div className="mt-2 font-display text-2xl text-ink">0.1 – 0.4</div>
-                <div className="mt-2 text-sm text-ink-60">Core protocol · CLI · SDK · MCP</div>
-              </div>
-              <div className="border hairline rounded-sm p-4 bg-ink text-white">
-                <div className="label" style={{ color: 'rgba(255,255,255,0.55)' }}>
-                  in progress
+              {summary.map((s) => (
+                <div
+                  key={s.state}
+                  className={
+                    s.state === 'in-progress'
+                      ? 'border hairline rounded-sm p-4 bg-ink text-white'
+                      : 'border hairline rounded-sm p-4'
+                  }
+                >
+                  <div className="label" style={s.state === 'in-progress' ? { color: 'rgba(255,255,255,0.55)' } : undefined}>
+                    {s.state}
+                  </div>
+                  <div className="mt-2 font-display text-xl text-inherit leading-none">
+                    {s.count} entr{s.count === 1 ? 'y' : 'ies'}
+                  </div>
+                  <div className="mt-2 text-sm opacity-70 break-words">{s.versions}</div>
                 </div>
-                <div className="mt-2 font-display text-2xl">0.5</div>
-                <div className="mt-2 text-sm opacity-75">Integrations · VS Code Extension</div>
-              </div>
-              <div className="border hairline rounded-sm p-4">
-                <div className="label">draft</div>
-                <div className="mt-2 font-display text-2xl text-ink">0.6 – 0.8</div>
-                <div className="mt-2 text-sm text-ink-60">niche charter → vertical demo</div>
-              </div>
-              <div className="border hairline rounded-sm p-4">
-                <div className="label">planned</div>
-                <div className="mt-2 font-display text-2xl text-ink">0.9 → 1.0</div>
-                <div className="mt-2 text-sm text-ink-60">SYN MVP · protocol finalization</div>
-              </div>
+              ))}
             </div>
           </div>
 
@@ -55,7 +69,7 @@ export default function RoadmapSection() {
                 <ul className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-y-2 gap-x-8 text-[0.95rem] text-ink-60 leading-relaxed">
                   {r.items.map((item, idx) => (
                     <li key={idx} className="flex gap-3">
-                      <span className="mono text-ink-40 text-[0.78rem] mt-1">
+                      <span className="mono text-ink-40 text-[0.78rem] mt-1 shrink-0">
                         {String(idx + 1).padStart(2, '0')}
                       </span>
                       <span>{item}</span>
