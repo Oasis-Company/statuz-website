@@ -88,11 +88,16 @@ export default function HeroSection() {
           </div>
 
           <div className="col-span-12 lg:col-span-5">
-            <div className="border hairline rounded-sm">
+            <div className="border hairline rounded-sm overflow-hidden">
               <div className="bg-ink text-white px-5 py-3 flex items-center justify-between text-[0.7rem] mono">
                 <span>session · statuz/v{siteMeta.version}</span>
                 <span className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-white" /> live
+                  <span
+                    className="w-1.5 h-1.5 rounded-full bg-white"
+                    style={{
+                      animation: 'pulse 2s ease-in-out infinite',
+                    }}
+                  /> live
                 </span>
               </div>
               <div className="mono text-[0.78rem] leading-7 text-ink-80 bg-ink-05/40 px-5 py-5">

@@ -83,6 +83,11 @@
   background: rgba(10, 10, 10, 0.35);
 }
 
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.35; transform: scale(1.4); }
+}
+
 /* Exposed design tokens for runtime calibration — Statuz */
 :root {
   --statuz-protocol: statuz/v1;

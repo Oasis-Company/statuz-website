@@ -88,7 +88,7 @@ export default function CalibrationQuizSection() {
   const progress = Object.keys(answers).length / QUESTIONS.length;
 
   return (
-    <section className="border-b hairline">
+    <section id="calibration" className="border-b hairline">
       <div className="mx-auto px-4 py-24" style={{ maxWidth: 1200 }}>
         <div className="grid grid-cols-12 gap-8">
           <div className="col-span-12 lg:col-span-4">

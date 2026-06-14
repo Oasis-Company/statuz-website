@@ -7,10 +7,13 @@ interface Props {
 
 const NAV = [
   { label: 'The Problem', href: '#problem' },
+  { label: 'Architecture', href: '#architecture' },
   { label: 'Layer Stack', href: '#stack' },
+  { label: 'Files', href: '#files' },
   { label: 'YAML Contract', href: '#sandbox' },
   { label: 'Terminal', href: '#terminal' },
   { label: 'Comparison', href: '#compare' },
+  { label: 'Calibration', href: '#calibration' },
   { label: 'Principles', href: '#principles' },
   { label: 'Roadmap', href: '#roadmap' },
 ];
@@ -67,7 +70,7 @@ export default function NavigationBar({ onOpenInspector }: Props) {
               href={siteMeta.npmUrl}
               target="_blank"
               rel="noreferrer"
-              className="hidden md:inline-flex items-center text-[0.72rem] mono text-ink border hairline hover:border-ink rounded-sm px-3 py-2 transition-colors"
+              className="hidden md:inline-flex items-center text-[0.72rem] mono text-ink-60 border hairline hover:text-ink hover:border-ink rounded-sm px-3 py-2 transition-colors"
             >
               npm ↗
             </a>

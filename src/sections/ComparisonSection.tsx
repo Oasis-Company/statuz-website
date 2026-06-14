@@ -1,5 +1,74 @@
 import { comparisons } from '../data';
 
+interface IconProps {
+  type: string;
+}
+
+function LineIcon({ type }: IconProps) {
+  const common = {
+    width: 18,
+    height: 18,
+    viewBox: '0 0 24 24',
+    fill: 'none',
+    stroke: 'currentColor',
+    strokeWidth: 1.2,
+    strokeLinecap: 'round' as const,
+    strokeLinejoin: 'round' as const,
+  };
+
+  if (type.startsWith('vs Memory')) {
+    // clock icon
+    return (
+      <svg {...common} aria-hidden="true">
+        <circle cx="12" cy="12" r="9" />
+        <path d="M12 7v5l3 2" />
+      </svg>
+    );
+  }
+  if (type.startsWith('vs MCP')) {
+    // plug / connect icon
+    return (
+      <svg {...common} aria-hidden="true">
+        <circle cx="9" cy="9" r="2" />
+        <circle cx="15" cy="15" r="2" />
+        <circle cx="15" cy="9" r="2" />
+        <circle cx="9" cy="15" r="2" />
+      </svg>
+    );
+  }
+  if (type.startsWith('vs Agent Skills')) {
+    // package icon
+    return (
+      <svg {...common} aria-hidden="true">
+        <path d="M3 7l9-4 9 4-9 4-9-4z" />
+        <path d="M3 7v10l9 4 9-4V7" />
+        <path d="M12 11v10" />
+      </svg>
+    );
+  }
+  if (type.startsWith('vs Project Documentation')) {
+    // book icon
+    return (
+      <svg {...common} aria-hidden="true">
+        <path d="M4 4h10a4 4 0 014 4v12H8a4 4 0 01-4-4V4z" />
+        <path d="M4 4v12a4 4 0 014-4h10" />
+      </svg>
+    );
+  }
+  if (type.startsWith('vs Task Management')) {
+    // checkbox / todo list icon
+    return (
+      <svg {...common} aria-hidden="true">
+        <rect x="4" y="5" width="6" height="6" rx="1" />
+        <path d="M13 8h7M13 13h7M13 18h7" />
+        <rect x="4" y="14" width="6" height="6" rx="1" />
+        <path d="M6 6l2 2" />
+      </svg>
+    );
+  }
+  return null;
+}
+
 export default function ComparisonSection() {
   return (
     <section id="compare" className="border-b hairline">
@@ -30,7 +99,12 @@ export default function ComparisonSection() {
                 key={c.axis}
                 className="grid grid-cols-12 items-start border-b hairline last:border-b-0"
               >
-                <div className="col-span-3 px-5 py-5 mono text-[0.78rem] text-ink-40">{c.axis}</div>
+                <div className="col-span-3 px-5 py-5 mono text-[0.78rem] text-ink-60">
+                  <div className="flex items-center gap-2 text-ink-60">
+                    <span className="inline-flex text-ink-40"><LineIcon type={c.axis} /></span>
+                    <span>{c.axis}</span>
+                  </div>
+                </div>
                 <div className="col-span-3 px-5 py-5 text-ink-80 text-[0.92rem] leading-relaxed">
                   {c.left}
                 </div>

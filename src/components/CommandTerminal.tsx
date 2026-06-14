@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState, type KeyboardEvent } from 'react';
-import { siteMeta } from '../data';
+import { siteMeta, defaultStatuzYaml } from '../data';
 
 interface CmdHandler {
   help: string;
@@ -17,6 +17,8 @@ const COMMANDS: Record<string, CmdHandler> = {
         '  statuz validate      — validate a statuz yaml against the JSON schema',
         '  statuz resume        — print a human-readable resume brief',
         '  statuz version       — show the installed CLI version',
+        '  statuz status        — parse and display the current session status',
+        '  statuz ls            — list the .statuz/ directory structure',
         '  niche manifest       — show the niche manifest (ecological position)',
         '  calibration drift    — report drift between declared niche and observed behavior',
         '  syn request          — begin a structured human-governed decision request',
@@ -80,6 +82,51 @@ const COMMANDS: Record<string, CmdHandler> = {
   'statuz version': {
     help: 'show the installed CLI version',
     run: () => `@statuz/cli v${siteMeta.version} · ${siteMeta.repository}`,
+  },
+  'statuz status': {
+    help: 'parse and display the current session status',
+    run: () => {
+      const lines = defaultStatuzYaml.split('\n');
+      const parsed: string[] = [];
+      for (const l of lines) {
+        const m = l.match(/^([A-Za-z0-9_\-]+):\s*(.+)$/);
+        if (m && parsed.length < 8) {
+          const val = m[2].startsWith('"') && m[2].endsWith('"') ? m[2].slice(1, -1) : m[2];
+          parsed.push(`  ${m[1].padEnd(18, ' ')} ${val}`);
+        }
+      }
+      return [
+        '» statuz status',
+        '',
+        ...parsed,
+        '',
+        `  turn · ${new Date().toISOString().split('T')[0]}`,
+      ].join('\n');
+    },
+  },
+  'statuz ls': {
+    help: 'list the .statuz/ directory structure',
+    run: () =>
+      [
+        '» statuz ls .statuz/',
+        '',
+        '  .statuz/',
+        '  ├── statuz.yaml                              (core status)',
+        '  ├── agents/',
+        '  │   ├── dev-agent.yaml                       (agent-specific)',
+        '  │   └── qa-agent.yaml                        (agent-specific)',
+        '  ├── niche/',
+        '  │   ├── manifest.yaml                        (declared position)',
+        '  │   ├── signals/',
+        '  │   │   └── signal-2026-06-14.yaml           (observed behavior)',
+        '  │   ├── calibration/                         (drift reports)',
+        '  │   └── syn/',
+        '  │       ├── request-001.yaml                 (SYN escalation)',
+        '  │       └── resolution-001.yaml              (human decision)',
+        '  └── schemas/',
+        '      ├── statuz.schema.json                   (core JSON schema)',
+        '      └── niche.schema.json                    (niche JSON schema)',
+      ].join('\n'),
   },
   'niche manifest': {
     help: 'show the niche manifest (ecological position)',

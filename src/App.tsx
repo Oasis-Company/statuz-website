@@ -3,10 +3,13 @@ import NavigationBar from './sections/NavigationBar';
 import TopInfoBar from './sections/TopInfoBar';
 import HeroSection from './sections/HeroSection';
 import ProblemSection from './sections/ProblemSection';
+import ArchitectureSection from './sections/ArchitectureSection';
 import LayerStackSection from './sections/LayerStackSection';
+import FileStructureSection from './sections/FileStructureSection';
 import YamlSandboxSection from './sections/YamlSandboxSection';
 import CliTerminalSection from './sections/CliTerminalSection';
 import ComparisonSection from './sections/ComparisonSection';
+import CalibrationQuizSection from './sections/CalibrationQuizSection';
 import PrinciplesSection from './sections/PrinciplesSection';
 import RoadmapSection from './sections/RoadmapSection';
 import FooterSection from './sections/FooterSection';
@@ -39,8 +42,16 @@ export default function App() {
           <ProblemSection />
         </ErrorBoundary>
 
+        <ErrorBoundary section="Architecture">
+          <ArchitectureSection />
+        </ErrorBoundary>
+
         <ErrorBoundary section="Layer Stack">
           <LayerStackSection />
+        </ErrorBoundary>
+
+        <ErrorBoundary section="File Structure">
+          <FileStructureSection />
         </ErrorBoundary>
 
         <ErrorBoundary section="YAML Sandbox">
@@ -53,6 +64,10 @@ export default function App() {
 
         <ErrorBoundary section="Comparison">
           <ComparisonSection />
+        </ErrorBoundary>
+
+        <ErrorBoundary section="Calibration Quiz">
+          <CalibrationQuizSection />
         </ErrorBoundary>
 
         <ErrorBoundary section="Principles">

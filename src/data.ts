@@ -446,3 +446,207 @@ checkpoints:
     summary: aligned website copy with real 0.5.1 release, repo, and roadmap
     next_action: npm run build → deploy
 `;
+
+// ── Architecture: how the five layers collaborate ──────────────────────
+export interface ArchitectureFlow {
+  layerId: string;
+  inputs: string[];
+  outputs: string[];
+  triggers: string[];
+  relationships: string[];
+}
+
+export const architectureFlows: ArchitectureFlow[] = [
+  {
+    layerId: 'core',
+    inputs: ['agent turn output', 'human prompt'],
+    outputs: ['statuz.yaml — identity, role, current_state, progress, relations, rules, checkpoints'],
+    triggers: ['resumption of the next agent session'],
+    relationships: [
+      'core is the entry point — every agent project has at least one statuz.yaml',
+      'core is read-write: agents write checkpoints; humans read the resume brief',
+      'niche, calibration, and SYN all build on top of core but do not replace it',
+    ],
+  },
+  {
+    layerId: 'niche',
+    inputs: ['human governance input', 'declared boundaries'],
+    outputs: ['niche/manifest.yaml — declared_position, boundaries, strategic_bets, success_signals'],
+    triggers: ['calibration reads niche to establish a baseline', 'SYN modifies niche when drift exceeds threshold'],
+    relationships: [
+      'niche is the "constitution" of the agent — slow-changing, human-authored',
+      'niche does NOT describe the present task (that is core)',
+      'niche is the reference layer for all drift detection',
+    ],
+  },
+  {
+    layerId: 'calibration',
+    inputs: ['niche manifest (baseline)', 'observed agent behavior', 'signal files'],
+    outputs: ['drift assessment — task_drift, collaboration_drift, boundary_drift scores'],
+    triggers: ['when any drift score exceeds threshold → SYN escalation', 'agent self-check at session boundaries'],
+    relationships: [
+      'calibration measures the gap between declared position and observed behavior',
+      'calibration NEVER modifies niche on its own authority',
+      'calibration is the only layer that may trigger SYN',
+    ],
+  },
+  {
+    layerId: 'syn',
+    inputs: ['calibration drift report', 'human principal decision'],
+    outputs: ['request record', 'resolution record', 'accountability log', 'may modify niche manifest'],
+    triggers: ['after a resolution is recorded → niche manifest updates', 'the updated niche becomes the new baseline'],
+    relationships: [
+      'SYN is the only authorized modifier of niche — this is the governance principle',
+      'SYN records both options the agent proposed and the human decision',
+      'A SYN resolution is permanent, auditable, and human-signed',
+    ],
+  },
+  {
+    layerId: 'sixtysix',
+    inputs: ['arrow declarations between agents, projects, tools, and organizations'],
+    outputs: ['portable, executable ecological topologies'],
+    triggers: ['cross-project coordination discovery', 'multi-agent niche composition'],
+    relationships: [
+      '66 is the long-term vision — it composes niches across project boundaries',
+      '66 is not required for individual agent projects (core + niche + calibration + SYN are sufficient)',
+      '66 is what turns a single agent project into a system of systems',
+    ],
+  },
+];
+
+// ── File structure: what lives in .statuz/ ─────────────────────────────
+export interface FileNode {
+  name: string;
+  type: 'dir' | 'file';
+  purpose?: string;
+  whoUpdates?: 'agent' | 'human' | 'both';
+  cadence?: string;
+  highlighted?: boolean;
+  children?: FileNode[];
+}
+
+export const fileStructure: FileNode[] = [
+  {
+    name: '.statuz',
+    type: 'dir',
+    purpose: 'the Statuz root — everything an agent needs to understand its situation',
+    children: [
+      {
+        name: 'statuz.yaml',
+        type: 'file',
+        purpose: 'core status — who am I, what am I doing, what is my progress, what are my rules',
+        whoUpdates: 'both',
+        cadence: 'per-turn / per-checkpoint',
+        highlighted: true,
+      },
+      {
+        name: 'agents',
+        type: 'dir',
+        purpose: 'multi-agent projects — one YAML per agent',
+        children: [
+          {
+            name: 'dev-agent.yaml',
+            type: 'file',
+            purpose: 'development agent status — mirrors statuz.yaml structure',
+            whoUpdates: 'agent',
+            cadence: 'per-turn',
+          },
+          {
+            name: 'qa-agent.yaml',
+            type: 'file',
+            purpose: 'QA agent status',
+            whoUpdates: 'agent',
+            cadence: 'per-turn',
+          },
+        ],
+      },
+      {
+        name: 'niche',
+        type: 'dir',
+        purpose: 'ecological positioning and governance',
+        highlighted: true,
+        children: [
+          {
+            name: 'manifest.yaml',
+            type: 'file',
+            purpose: 'niche declaration — declared_position, boundaries, strategic_bets, success_signals',
+            whoUpdates: 'human',
+            cadence: 'per-session / on-SYN-resolution',
+            highlighted: true,
+          },
+          {
+            name: 'signals',
+            type: 'dir',
+            purpose: 'time-stamped observed behavior signals',
+            children: [
+              {
+                name: 'signal-2026-06-14.yaml',
+                type: 'file',
+                purpose: 'a single observed signal — what the agent did, in what context',
+                whoUpdates: 'agent',
+                cadence: 'on-signal',
+              },
+            ],
+          },
+          {
+            name: 'assessments',
+            type: 'dir',
+            purpose: 'signal → assessment — how does this signal compare to declared niche?',
+          },
+          {
+            name: 'outcomes',
+            type: 'dir',
+            purpose: 'assessment → outcome — what was decided, what changed',
+          },
+          {
+            name: 'calibration',
+            type: 'dir',
+            purpose: 'drift scores — task_drift, collaboration_drift, boundary_drift',
+          },
+          {
+            name: 'syn',
+            type: 'dir',
+            purpose: 'structured escalation requests and human resolutions',
+            children: [
+              {
+                name: 'request-001.yaml',
+                type: 'file',
+                purpose: 'a structured request for human decision — options with evidence',
+                whoUpdates: 'agent',
+                cadence: 'on-drift-threshold-exceeded',
+              },
+              {
+                name: 'resolution-001.yaml',
+                type: 'file',
+                purpose: 'human principal resolution — the decision, with rationale, recorded permanently',
+                whoUpdates: 'human',
+                cadence: 'on-human-response',
+              },
+            ],
+          },
+        ],
+      },
+      {
+        name: 'schemas',
+        type: 'dir',
+        purpose: 'JSON Schema files — what validates every YAML above',
+        children: [
+          {
+            name: 'statuz.schema.json',
+            type: 'file',
+            purpose: 'core schema — identity, role, current_state, progress, relations, rules, checkpoints',
+            whoUpdates: 'human',
+            cadence: 'on-protocol-version-change',
+          },
+          {
+            name: 'niche.schema.json',
+            type: 'file',
+            purpose: 'niche schema — declared_position, boundaries, strategic_bets, success_signals',
+            whoUpdates: 'human',
+            cadence: 'on-protocol-version-change',
+          },
+        ],
+      },
+    ],
+  },
+];
