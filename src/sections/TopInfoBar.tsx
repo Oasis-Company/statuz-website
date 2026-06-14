@@ -1,14 +1,19 @@
 export default function TopInfoBar() {
   return (
-    <div className="bg-zinc-950 text-white py-2 px-4 text-center text-xs font-mono select-none tracking-tight flex items-center justify-between relative z-40">
-      <div className="flex items-center gap-1.5 leading-none">
-        <span className="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-        <span>Statuz Beta v0.5.0 Calibration Console</span>
+    <div className="bg-ink text-white">
+      <div
+        className="mx-auto px-4 py-2 flex items-center justify-between text-[0.7rem] mono leading-none"
+        style={{ maxWidth: 1200 }}
+      >
+        <div className="flex items-center gap-2">
+          <span className="inline-block w-1.5 h-1.5 rounded-full bg-white" />
+          <span>Statuz Beta v0.5.0 — Situated Alignment Runtime</span>
+        </div>
+        <p className="hidden md:block opacity-70">
+          maintainer: ceaserzhao · Oasis Company · Apache-2.0
+        </p>
+        <span className="opacity-70 hidden sm:inline">protocol: statuz/v1</span>
       </div>
-      <p className="hidden md:block opacity-60 text-[11px]">
-        Maintainer: ceaserzhao (Oasis Company) | License: Apache-2.0
-      </p>
-      <span className="text-[11px] opacity-70">calibrated · 631ms ago</span>
     </div>
   );
 }

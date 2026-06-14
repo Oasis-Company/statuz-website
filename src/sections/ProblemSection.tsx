@@ -1,57 +1,35 @@
-const PROBLEMS = [
-  {
-    id: 'status',
-    title: 'Agent state is not a log — it is a recoverable graph.',
-    body: 'When an agent forgets what it agreed to do, downstream decisions silently drift. Statuz treats every turn as a signed, diffable status snapshot so recovery is mechanical, not magical.',
-  },
-  {
-    id: 'ecology',
-    title: 'Envelopes bound what an agent may touch.',
-    body: 'Tool bleed across boundaries is the most common failure surface. Statuz declares envelopes declaratively and audits every tool call against them.',
-  },
-  {
-    id: 'calibration',
-    title: 'Confidence claims must be scored, not trusted.',
-    body: 'Overconfident claims compound across episodes. Statuz compares declared p50/p90 against observed outcomes and flags calibration drift before decisions compound.',
-  },
-  {
-    id: 'human',
-    title: 'Human intent is a contract, not a prompt.',
-    body: 'Milestones, acceptance criteria, and amendments are versioned text. Statuz turns intent into explicit, bilateral contracts the agent can cite, not hallucinate.',
-  },
-];
+import { problems } from '../data';
 
 export default function ProblemSection() {
   return (
-    <section id="problem" className="py-16 border-b border-zinc-200">
-      <div className="grid grid-cols-12 gap-4">
-        <div className="col-span-12 md:col-span-4">
-          <div className="text-[11px] font-mono uppercase tracking-[0.25em] text-zinc-500">
-            The Problems
+    <section id="problem" className="border-b hairline">
+      <div className="mx-auto px-4 py-24" style={{ maxWidth: 1200 }}>
+        <div className="grid grid-cols-12 gap-8">
+          <div className="col-span-12 lg:col-span-4">
+            <div className="label">The Problems</div>
+            <h2 className="mt-4 font-display font-medium text-[2rem] sm:text-[2.3rem] leading-tight text-ink">
+              Four places where agents quietly break.
+            </h2>
+            <p className="mt-4 text-ink-60 text-base leading-relaxed">
+              Statuz is organized around four failure surfaces — each observed repeatedly across production
+              agent deployments. Each corresponds to a layer of the protocol.
+            </p>
           </div>
-          <h2 className="font-display text-3xl text-zinc-950 mt-4 leading-tight">
-            Four failure surfaces — four explicit instruments.
-          </h2>
-          <p className="mt-4 text-zinc-600 text-sm max-w-prose">
-            Each problem below is real, observed, and expensive at scale. Statuz provides a
-            compact mechanism for each, composed into a single status surface.
-          </p>
-        </div>
 
-        <div className="col-span-12 md:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {PROBLEMS.map((p, idx) => (
-            <article
-              key={p.id}
-              className="border border-zinc-200 rounded-sm bg-white p-5 flex flex-col"
-            >
-              <div className="flex items-center justify-between text-[11px] font-mono text-zinc-500">
-                <span>{String(idx + 1).padStart(2, '0')} · problem.{p.id}</span>
-                <span className="w-1.5 h-1.5 rounded-full bg-zinc-900" />
-              </div>
-              <h3 className="mt-3 font-display text-lg text-zinc-900 leading-snug">{p.title}</h3>
-              <p className="mt-3 text-sm text-zinc-600 leading-relaxed">{p.body}</p>
-            </article>
-          ))}
+          <div className="col-span-12 lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-px bg-ink-10 border hairline rounded-sm overflow-hidden">
+            {problems.map((p, idx) => (
+              <article key={p.id} className="bg-white p-7 flex flex-col">
+                <div className="flex items-baseline justify-between">
+                  <div className="label">{String(idx + 1).padStart(2, '0')}</div>
+                  <div className="label">problem · {p.id}</div>
+                </div>
+                <h3 className="mt-5 font-display font-medium text-xl leading-snug text-ink">
+                  {p.headline}
+                </h3>
+                <p className="mt-3 text-ink-60 text-[0.95rem] leading-relaxed">{p.body}</p>
+              </article>
+            ))}
+          </div>
         </div>
       </div>
     </section>

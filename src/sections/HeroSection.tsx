@@ -2,64 +2,66 @@ import { siteMeta } from '../data';
 
 export default function HeroSection() {
   return (
-    <section id="top" className="pt-12 pb-20 border-b border-zinc-200">
-      <div className="grid grid-cols-12 gap-4">
-        <div className="col-span-12 lg:col-span-8">
-          <div className="text-[11px] font-mono uppercase tracking-[0.25em] text-zinc-500">
-            {siteMeta.name} · {siteMeta.tagline}
-          </div>
-          <h1 className="mt-5 font-display text-4xl sm:text-5xl lg:text-6xl text-zinc-950 tracking-tight leading-[1.05]">
-            Agents that keep their promises —
-            <span className="block text-zinc-500 font-sans font-light">
-              recorded, versioned, and anchored to human intent.
-            </span>
-          </h1>
+    <section id="top" className="border-b hairline">
+      <div className="mx-auto px-4 pt-20 pb-24" style={{ maxWidth: 1200 }}>
+        <div className="label">{siteMeta.tagline} · {siteMeta.name}</div>
 
-          <p className="mt-8 text-zinc-600 text-base sm:text-lg max-w-2xl leading-relaxed">
-            Statuz is an open protocol and toolchain optimizing agent status recovery, ecological
-            boundaries, calibration drift detection, and human strategic synchronization contracts.
-            It treats agents not as black boxes, but as <em className="not-italic text-zinc-900">observables</em>.
-          </p>
+        <h1 className="mt-6 font-display font-medium tracking-tight text-[2.75rem] sm:text-[3.4rem] leading-[1.02] text-ink max-w-3xl">
+          Memory lets an AI remember the past.
+          <span className="block text-ink-40 font-sans font-light mt-3 text-[1.8rem] sm:text-[2.2rem]">
+            Statuz lets an AI understand where it stands, what matters now, and when human direction must be renewed.
+          </span>
+        </h1>
 
-          <div className="mt-10 flex flex-wrap items-center gap-3">
-            <a
-              href="#sandbox"
-              className="inline-flex items-center gap-2 text-sm font-mono text-white bg-zinc-950 hover:bg-zinc-800 rounded-sm px-4 py-2.5 transition-colors"
-            >
-              open sandbox →
-            </a>
-            <a
-              href="#stack"
-              className="inline-flex items-center gap-2 text-sm font-mono text-zinc-800 border border-zinc-200 hover:border-zinc-400 rounded-sm px-4 py-2.5 transition-colors"
-            >
-              read the stack
-            </a>
-            <span className="text-[11px] font-mono text-zinc-500 ml-1 hidden sm:inline">
-              beta · v{siteMeta.version}
-            </span>
-          </div>
-        </div>
+        <div className="mt-14 grid grid-cols-12 gap-8">
+          <div className="col-span-12 lg:col-span-7">
+            <p className="text-ink-60 text-[1.05rem] leading-relaxed max-w-2xl">
+              Statuz is an open protocol and toolchain for expressing who an agent is, what it is doing, what
+              progress has been made, what else in the project ecosystem it relates to, and — the thing that
+              makes it different — where it stands in relation to a human principal's intent.
+            </p>
+            <p className="mt-4 text-ink-60 text-[1.05rem] leading-relaxed max-w-2xl">
+              It is not a vector database. It is not MCP. It is not a task manager. It is the compact,
+              versioned, human-auditable runtime status that every agent workflow eventually needs.
+            </p>
 
-        <div className="col-span-12 lg:col-span-4">
-          <div className="rounded-sm border border-zinc-200 overflow-hidden">
-            <div className="bg-zinc-950 text-zinc-100 px-4 py-3 flex items-center justify-between text-[11px] font-mono uppercase tracking-wider">
-              <span>session · live</span>
-              <span className="flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                streaming
-              </span>
+            <div className="mt-10 flex flex-wrap items-center gap-3">
+              <a
+                href="https://github.com/statuz-protocol/statuz"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 text-sm mono text-white bg-ink hover:bg-ink-80 rounded-sm px-5 py-3 transition-colors"
+              >
+                start on github ↗
+              </a>
+              <a
+                href="#stack"
+                className="inline-flex items-center gap-2 text-sm mono text-ink border hairline hover:bg-ink-05 rounded-sm px-5 py-3 transition-colors"
+              >
+                read the layer stack
+              </a>
             </div>
-            <div className="font-mono text-[12.5px] text-zinc-800 bg-white px-4 py-4 leading-7">
-              <div><span className="text-zinc-400">protocol</span>      statuz/v1</div>
-              <div><span className="text-zinc-400">session.id</span>    sess_8F2a...e1</div>
-              <div><span className="text-zinc-400">agent.id</span>      agent_ceaserzhao</div>
-              <div><span className="text-zinc-400">envelope</span>      research/docs,web:read</div>
-              <div><span className="text-zinc-400">tools</span>         browser, files, planner</div>
-              <div><span className="text-zinc-400">calib.p50</span>     0.72 ± 0.04</div>
-              <div><span className="text-zinc-400">contract</span>      deploy-statuz-website</div>
-              <div><span className="text-zinc-400">milestone</span>     beta-v0.5.0</div>
-              <div className="mt-2 border-t border-zinc-100 pt-2 text-zinc-500">
-                last.turn · 631ms ago
+          </div>
+
+          <div className="col-span-12 lg:col-span-5">
+            <div className="border hairline rounded-sm">
+              <div className="bg-ink text-white px-5 py-3 flex items-center justify-between text-[0.7rem] mono">
+                <span>session · statuz/v1</span>
+                <span className="flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-white" /> live
+                </span>
+              </div>
+              <div className="mono text-[0.78rem] leading-7 text-ink-80 bg-ink-05/40 px-5 py-5">
+                <div><span className="text-ink-40">statuz_version</span>      0.1</div>
+                <div><span className="text-ink-40">agent_name</span>          dev-agent</div>
+                <div><span className="text-ink-40">project</span>             statuz-website</div>
+                <div><span className="text-ink-40">organization</span>        Oasis Company</div>
+                <div><span className="text-ink-40">phase</span>               implementation</div>
+                <div><span className="text-ink-40">task</span>                roll out niche and SYN sections</div>
+                <div><span className="text-ink-40">status</span>              in_progress</div>
+                <div><span className="text-ink-40">last_checkpoint</span>     copy edited · ready to rebuild</div>
+                <div><span className="text-ink-40">next_action</span>         npm run build, then deploy</div>
+                <div className="mt-3 pt-3 border-t hairline text-ink-40">turn · 00:06:31 ago</div>
               </div>
             </div>
           </div>

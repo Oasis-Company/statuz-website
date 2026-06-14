@@ -1,46 +1,64 @@
-import { useState } from 'react';
-import { layers } from '../data';
+import type { Layer } from '../data';
 
-export default function LayerExplorer() {
-  const [active, setActive] = useState(layers[0].id);
-  const layer = layers.find(l => l.id === active) ?? layers[0];
+interface Props {
+  layer: Layer;
+}
 
+export default function LayerExplorer({ layer }: Props) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-4 gap-0 border border-zinc-200 rounded-sm overflow-hidden bg-white">
-      <div className="md:col-span-1 border-b md:border-b-0 md:border-r border-zinc-200">
-        {layers.map((l, idx) => (
-          <button
-            key={l.id}
-            onClick={() => setActive(l.id)}
-            className={`w-full text-left px-4 py-3 border-b border-zinc-200 last:border-b-0 font-mono text-[12px] transition-colors ${
-              active === l.id ? 'bg-zinc-50 text-zinc-900 border-l-[3px] border-l-zinc-950' : 'text-zinc-600 hover:bg-zinc-50/60'
-            }`}
-          >
-            <span className="text-zinc-400 mr-2">{String(idx + 1).padStart(2, '0')}</span>
-            {l.name}
-          </button>
-        ))}
-      </div>
-      <div className="md:col-span-3 p-5">
-        <div className="text-[11px] font-mono uppercase tracking-wider text-zinc-500">
-          layer.{layer.id}
+    <div className="border hairline rounded-sm overflow-hidden">
+      <div className="bg-ink text-white px-6 py-4 flex items-baseline justify-between">
+        <div className="flex items-baseline gap-3">
+          <span className="label" style={{ color: 'rgba(255,255,255,0.55)' }}>
+            {layer.id}
+          </span>
+          <span className="font-display font-medium text-lg">{layer.name}</span>
+          <span className="label hidden sm:inline" style={{ color: 'rgba(255,255,255,0.45)' }}>
+            — {layer.subtitle}
+          </span>
         </div>
-        <div className="font-display text-xl text-zinc-900 mt-1">{layer.name}</div>
-        <div className="mt-2 text-zinc-600 text-sm max-w-prose">{layer.summary}</div>
-        <dl className="mt-5 grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
-          <div>
-            <dt className="text-[11px] font-mono uppercase tracking-wider text-zinc-500">responsibility</dt>
-            <dd className="text-zinc-800 mt-1">{layer.responsibility}</dd>
+        <span className="text-[0.7rem] mono opacity-70">{layer.status}</span>
+      </div>
+
+      <div className="px-6 py-6">
+        <div className="grid grid-cols-12 gap-8">
+          <div className="col-span-12 md:col-span-7">
+            <div className="label">Question Answered</div>
+            <p className="mt-3 font-serif-display text-ink text-2xl leading-[1.25]">
+              {layer.questionAnswered}
+            </p>
+            <div className="mt-8">
+              <div className="label">Summary</div>
+              <p className="mt-3 text-ink-60 text-[0.97rem] leading-relaxed">{layer.summary}</p>
+            </div>
           </div>
-          <div>
-            <dt className="text-[11px] font-mono uppercase tracking-wider text-zinc-500">cadence</dt>
-            <dd className="text-zinc-800 mt-1">{layer.cadence}</dd>
+
+          <div className="col-span-12 md:col-span-5 space-y-6">
+            <div>
+              <div className="label">Responsibility</div>
+              <p className="mt-2 text-ink-80 text-[0.92rem] leading-relaxed">{layer.responsibility}</p>
+            </div>
+            <div>
+              <div className="label">Cadence</div>
+              <p className="mt-2 text-ink-80 text-[0.92rem] leading-relaxed">{layer.cadence}</p>
+            </div>
+            {layer.primitives && layer.primitives.length > 0 && (
+              <div>
+                <div className="label">Primitives</div>
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {layer.primitives.map((p) => (
+                    <span
+                      key={p}
+                      className="mono text-[0.72rem] text-ink-60 border hairline rounded-sm px-2.5 py-1.5 bg-ink-05"
+                    >
+                      {p}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
-          <div>
-            <dt className="text-[11px] font-mono uppercase tracking-wider text-zinc-500">failure mode</dt>
-            <dd className="text-zinc-800 mt-1">{layer.failureMode}</dd>
-          </div>
-        </dl>
+        </div>
       </div>
     </div>
   );

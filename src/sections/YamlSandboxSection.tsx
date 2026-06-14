@@ -2,23 +2,30 @@ import YamlSandbox from '../components/YamlSandbox';
 
 export default function YamlSandboxSection() {
   return (
-    <section id="sandbox" className="py-16 border-b border-zinc-200">
-      <div className="grid grid-cols-12 gap-4">
-        <div className="col-span-12 md:col-span-4">
-          <div className="text-[11px] font-mono uppercase tracking-[0.25em] text-zinc-500">
-            YAML Sandbox
+    <section id="sandbox" className="border-b hairline">
+      <div className="mx-auto px-4 py-24" style={{ maxWidth: 1200 }}>
+        <div className="grid grid-cols-12 gap-8">
+          <div className="col-span-12 lg:col-span-4">
+            <div className="label">YAML Contract</div>
+            <h2 className="mt-4 font-display font-medium text-[2rem] sm:text-[2.3rem] leading-tight text-ink">
+              A contract a human can read, an agent can parse.
+            </h2>
+            <p className="mt-4 text-ink-60 text-base leading-relaxed">
+              Edit the YAML on the left to see how Statuz interprets it. The same structure an agent
+              consumes at runtime is visible to any contributor — and audit-able without tooling.
+            </p>
+            <div className="mt-8 border hairline rounded-sm p-5 bg-ink-05">
+              <div className="label">A rule worth writing down</div>
+              <p className="mt-3 text-ink-60 text-sm leading-relaxed">
+                If you cannot describe in text what the agent should do next, an LLM cannot reliably infer
+                it either. Write it down; then Statuz will remember it for you.
+              </p>
+            </div>
           </div>
-          <h2 className="font-display text-3xl text-zinc-950 mt-4 leading-tight">
-            Edit the contract; watch the surface recompute.
-          </h2>
-          <p className="mt-4 text-zinc-600 text-sm max-w-prose">
-            A lightweight YAML contract is parsed on the right. Change envelopes, calibration
-            bounds, or human contract fields — the observables panel updates instantly. This is
-            the same contract surface an agent would read at runtime.
-          </p>
-        </div>
-        <div className="col-span-12 md:col-span-8">
-          <YamlSandbox />
+
+          <div className="col-span-12 lg:col-span-8">
+            <YamlSandbox />
+          </div>
         </div>
       </div>
     </section>

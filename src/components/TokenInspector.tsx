@@ -1,76 +1,106 @@
-import { useTheme } from '../context/ThemeContext';
-import { statuzRows } from '../data';
+import { siteMeta } from '../data';
 
 interface Props {
   onClose: () => void;
 }
 
 export default function TokenInspector({ onClose }: Props) {
-  const { config } = useTheme();
-
   return (
-    <div className="h-full flex flex-col">
-      <div className="px-5 py-4 border-b border-zinc-200 flex items-center justify-between">
-        <div>
-          <div className="text-[11px] font-mono uppercase tracking-wider text-zinc-500">
-            Token Inspector
+    <div className="fixed inset-0 z-50 flex justify-end" onClick={onClose}>
+      <div className="absolute inset-0 bg-ink/20 backdrop-blur-sm" />
+      <aside
+        onClick={(e) => e.stopPropagation()}
+        className="relative w-full max-w-md h-full bg-white shadow-xl border-l hairline animate-in slide-in-from-right"
+      >
+        <div className="px-6 py-5 border-b hairline flex items-center justify-between">
+          <div>
+            <div className="label">Token Inspector</div>
+            <div className="mt-1 font-display text-lg text-ink">System Variables</div>
           </div>
-          <div className="font-display text-base text-zinc-900 mt-1">System variables</div>
+          <button
+            onClick={onClose}
+            className="h-9 w-9 flex items-center justify-center rounded-sm border hairline text-ink-60 hover:text-ink"
+          >
+            ✕
+          </button>
         </div>
-        <button
-          onClick={onClose}
-          aria-label="Close"
-          className="h-8 w-8 flex items-center justify-center rounded-xs border border-zinc-200 hover:border-zinc-400 text-zinc-600"
-        >
-          ✕
-        </button>
-      </div>
 
-      <div className="flex-1 overflow-y-auto px-5 py-4 space-y-5">
-        <section>
-          <div className="text-[11px] font-mono uppercase tracking-wider text-zinc-500 mb-2">
-            current theme
-          </div>
-          <div className="font-mono text-xs text-zinc-700 bg-zinc-50 border border-zinc-200 rounded-xs p-3 leading-relaxed">
-            <div>theme: {config.theme}</div>
-            <div>accent: {config.accent}</div>
-            <div>radius: {config.radius}px</div>
-            <div>density: {config.density}</div>
-          </div>
-        </section>
+        <div className="flex-1 overflow-y-auto px-6 py-6 space-y-8">
+          <section>
+            <div className="label">protocol</div>
+            <div className="mt-3 border hairline rounded-sm p-4 bg-ink-05 mono text-[0.82rem] text-ink-80 leading-7">
+              <div>
+                <span className="text-ink-40">protocol</span> &nbsp;statuz/v1
+              </div>
+              <div>
+                <span className="text-ink-40">site</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;{siteMeta.name}
+              </div>
+              <div>
+                <span className="text-ink-40">version</span> &nbsp;&nbsp;{siteMeta.version}
+              </div>
+              <div>
+                <span className="text-ink-40">maintainer</span>&nbsp;{siteMeta.maintainer}
+              </div>
+              <div>
+                <span className="text-ink-40">company</span> &nbsp;&nbsp;Oasis Company
+              </div>
+            </div>
+          </section>
 
-        <section>
-          <div className="text-[11px] font-mono uppercase tracking-wider text-zinc-500 mb-2">
-            status.variables
-          </div>
-          <table className="w-full text-xs font-mono">
-            <tbody>
-              {statuzRows.map(row => (
-                <tr key={row.field} className="border-b border-zinc-100 last:border-b-0">
-                  <td className="py-2 pr-3 text-zinc-500">{row.field}</td>
-                  <td className="py-2 text-zinc-800">{row.value}</td>
-                  <td className="py-2 text-right text-[10px] uppercase tracking-wider text-zinc-400">
-                    {row.source}
-                  </td>
-                </tr>
+          <section>
+            <div className="label">live status</div>
+            <div className="mt-3 border hairline rounded-sm overflow-hidden">
+              {[
+                ['session.id', 'sess_8F2a...e1'],
+                ['agent.id', 'agent_ceaserzhao'],
+                ['envelope', 'research/docs, web:read'],
+                ['tools.enabled', 'browser, files, planner'],
+                ['calibration.p50', '0.72 ± 0.04'],
+                ['human.contract', 'deploy-statuz-website'],
+                ['milestone', 'beta-v0.5.0'],
+                ['last.turn', '631ms ago'],
+              ].map(([k, v]) => (
+                <div
+                  key={k}
+                  className="grid grid-cols-[130px_1fr] gap-3 px-4 py-2 text-[0.82rem] mono border-b hairline last:border-b-0"
+                >
+                  <span className="text-ink-40">{k}</span>
+                  <span className="text-ink-80 truncate">{v}</span>
+                </div>
               ))}
-            </tbody>
-          </table>
-        </section>
+            </div>
+          </section>
 
-        <section>
-          <div className="text-[11px] font-mono uppercase tracking-wider text-zinc-500 mb-2">
-            tokens.imports
-          </div>
-          <div className="font-mono text-[11px] text-zinc-600 bg-zinc-50 border border-zinc-200 rounded-xs p-3 leading-relaxed">
-            <div>--font-sans: Inter</div>
-            <div>--font-display: Space Grotesk</div>
-            <div>--font-mono: JetBrains Mono</div>
-            <div>--color-brand-black: #050505</div>
-            <div>--color-brand-gray: #8A8A93</div>
-          </div>
-        </section>
-      </div>
+          <section>
+            <div className="label">typography & tokens</div>
+            <div className="mt-3 border hairline rounded-sm p-4 bg-ink-05 mono text-[0.82rem] text-ink-80 leading-7">
+              <div>
+                <span className="text-ink-40">font.sans</span>&nbsp;&nbsp;&nbsp; Inter
+              </div>
+              <div>
+                <span className="text-ink-40">font.display</span>&nbsp; Space Grotesk
+              </div>
+              <div>
+                <span className="text-ink-40">font.serif</span>&nbsp;&nbsp;&nbsp; Newsreader
+              </div>
+              <div>
+                <span className="text-ink-40">font.mono</span>&nbsp;&nbsp;&nbsp;&nbsp; JetBrains Mono
+              </div>
+              <div className="border-t hairline mt-3 pt-3">
+                <span className="text-ink-40">palette</span>&nbsp;&nbsp;&nbsp;&nbsp; ink · paper · hairline
+              </div>
+              <div>
+                <span className="text-ink-40">radius</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; small · 2–4px
+              </div>
+              <div>
+                <span className="text-ink-40">motion</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; draw-in ·
+                slide-in-from-right
+              </div>
+            </div>
+          </section>
+        </div>
+      </aside>
     </div>
   );
 }
